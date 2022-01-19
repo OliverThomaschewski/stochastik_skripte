@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from scipy import stats, special
 from matplotlib import pyplot as plt
 
@@ -13,6 +14,7 @@ def show_basics(values):
     """
         Prints basic statistical values
         :param values: List with numbers
+        :returns: None
     """
     print("")
     print(f"WERT \t\t\tMETHODE \t\t\tERGEBNIS")
@@ -55,4 +57,32 @@ def korr_scatter(a,b):
     plt.scatter(a,b)
     plt.show()
 
-    
+def haeufigkeit(data):
+    """
+    Berechnet und zeichnet absolute und relative Häufigkeiten
+    :param data: Liste mit Werten
+    """
+
+    df = pd.DataFrame(data).value_counts().rename_axis("Wert").reset_index(name = "Absolute Häufigkeit")
+
+    df["Relative Häufigkeit"] = df["Absolute Häufigkeit"]/len(data)
+    df = df.sort_values(by= "Wert")
+    df["Werte für Verteilungsfunktion"] = df["Relative Häufigkeit"].cumsum()
+    print("")
+    print(df.to_string(index = False))
+
+
+    plot1 = plt.figure(1)
+    plt.title("Absolute Häufigkeiten")
+    plt.xlabel("Werte")
+    plt.ylabel("Häufigkeit")
+    plt.bar(df["Wert"], df["Absolute Häufigkeit"])
+
+    plot2 = plt.figure(2)
+    plt.title("Empirische Verteilungsfunktion")
+    plt.xlabel("Werte")
+    plt.ylabel("Kumulierte Häufigkeit")
+    plt.hist(data, df.shape[0]-1, cumulative=True, histtype="step", density=True,)
+
+
+    plt.show()
