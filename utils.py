@@ -1,7 +1,12 @@
+from xml.sax.handler import property_interning_dict
 import numpy as np
 import pandas as pd
 from scipy import stats, special
 from matplotlib import pyplot as plt
+from scipy.stats import geom
+from scipy.stats import bernoulli
+from scipy.stats import binom
+from scipy.stats import poisson
 
 import math
 
@@ -86,3 +91,52 @@ def haeufigkeit(data):
 
 
     plt.show()
+
+
+def diskret(n, k, p, lam, type, method):
+
+    print("\nBeschreibung \tFormel \t\t\tErgebnis")
+    print("----------------------------------------------------------")
+
+    if type == "geom":
+        print("Geometrisch")
+        if method == "pmf":
+            print(f"P(X = {n}) \tgeom.pmf{n,p} \t{geom.pmf(n,p)}")
+        elif method == "cdf":
+            print(f"P(X <= {n}) \tgeom.cdf{n,p} \t{geom.cdf(n,p)}")
+        elif method == "sf":
+            print(f"P(X > {n}) \tgeom.sf{n,p} \t{geom.sf(n,p)}")
+        
+        print(f"Erwartungswert \t1/p \t\t\t{1/p} ")
+       
+        print(f"Varianz \tgeom.var({p}): \t\t{geom.var(p)}")
+
+
+    if type == "bin":
+        print("Binomial")
+        if method == "pmf":
+            print(f"P(X = {k}) \tbinom.pmf{k,n,p} \t{binom.pmf(k,n,p)}")
+        elif method == "cdf":
+            print(f"P(X <= {k}) \tbinom.cdf{k,n,p} \t{binom.cdf(k,n,p)}")
+        elif method == "sf":
+            print(f"P(X > {k}) \tbinom.sf{k,n,p} \t{binom.sf(k,n,p)}")
+        
+        print(f"Erwartungswert \tn*p \t\t\t{n*p} ")
+       
+        print(f"Varianz \tbinom.var({n,p}): \t{binom.var(n,p)}")
+
+
+    if type == "po":
+        print("Poisson")
+        if method == "pmf":
+            print(f"P(X = {k}) \tpoisson.pmf{k,lam} \t{poisson.pmf(k,lam)}")
+        elif method == "cdf":
+            print(f"P(X <= {k}) \tpoisson.cdf{k,lam} \t{poisson.cdf(k,lam)}")
+        elif method == "sf":
+            print(f"P(X > {k}) \tpoisson.sf{k,lam} \t{poisson.sf(k,lam)}")
+        
+        print(f"Erwartungswert \tlambda \t\t\t{lam} ")
+       
+        print(f"Varianz \tlambda \t\t\t{lam}")
+
+        
