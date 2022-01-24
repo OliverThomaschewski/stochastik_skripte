@@ -7,6 +7,7 @@ from scipy.stats import geom
 from scipy.stats import bernoulli
 from scipy.stats import binom
 from scipy.stats import poisson
+from scipy.stats import uniform, expon
 
 import math
 
@@ -139,4 +140,30 @@ def diskret(n, k, p, lam, type, method):
        
         print(f"Varianz \tlambda \t\t\t{lam}")
 
+        
+def stetig(c,a,b,lam, method, type):
+    print("\nBeschreibung \t\tFormel \t\t\tErgebnis")
+    print("--------------------------------------------------------------------")
+
+    if type == "gv":
+        print("Gleichverteilung")
+        if method == "cdf":
+            print(f"P(X <= {c}) \t\tuniform.cdf{c,a,b} \t{uniform.cdf(c,a,b)}")
+        elif method == "sf":
+            print(f"P(X > {c}) \t\tuniform.sf{c,a,b} \t{uniform.sf(c,a,b)}")
+        
+        #print(f"Erwartungswert \tlambda \t\t\t{lam} ")
+       
+        #print(f"Varianz \tlambda \t\t\t{lam}")
+
+    if type == "exp":
+        print("Exponentialverteilung")
+        if method == "cdf":
+            print(f"P(X < {c}) \t\texpon.cdf{c, lam} \t{expon.cdf(1/lam,c)}")
+        elif method == "sf":
+            print(f"P(X > {c}) \t\texpon.sf{c, lam} \t{expon.sf(1/lam, c)}")
+        
+        print(f"Erwartungswert \t1/lambda \t\t\t{1/lam} ")
+       
+        print(f"Varianz \t1/lambda**2 \t\t\t{1/lam**2}")
         
