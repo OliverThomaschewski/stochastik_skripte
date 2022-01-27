@@ -7,7 +7,7 @@ from scipy.stats import geom
 from scipy.stats import bernoulli
 from scipy.stats import binom
 from scipy.stats import poisson
-from scipy.stats import uniform, expon
+from scipy.stats import uniform, expon, norm
 
 import math
 
@@ -23,22 +23,27 @@ def show_basics(values):
         :returns: None
     """
     print("")
-    print(f"WERT \t\t\tMETHODE \t\t\tERGEBNIS")
+    print(f"WERT \t\t\tMETHODE \t\t\t\t\tERGEBNIS")
     print("________________________________________________________________________________________________________")
-    print(f"Max \t\t\tmax(values) \t\t\t{max(values)}")
-    print(f"Min \t\t\tmin(values) \t\t\t{min(values)}")
-    print(f"Modalwert \t\tstats.mode() \t\t\t{stats.mode(values)}")
-    print(f"Arithmetische Mittel \tnp.mean() \t\t\t{np.mean(values)}")
-    print(f"Median \t\t\tnp.median() \t\t\t{np.median(values)}")
-    print(f"90% Quantil \t\tnp.quantile(list, 0.9) \t\t{np.quantile(values, 0.9)}")
-    print(f"75% Quartil \t\tnp.quantile(list, 0.75) \t{np.quantile(values, 0.75)}")
-    print(f"50% Quartil \t\tnp.quantile(list, 0.5) \t\t{np.quantile(values, 0.5)}")
-    print(f"25% Quartil \t\tnp.quantile(list, 0.25) \t{np.quantile(values, 0.25)}")
-    print(f"10% Quantil \t\tnp.quantile(list, 0.1) \t\t{np.quantile(values, 0.1)}")
-    print(f"Varianz \t\tnp.var(list) \t\t\t{np.var(values)}")
-    print(f"Standardabweichung \tnp.std(list) \t\t\t{np.std(values)}")
-    print(f"Interquartilsabstand \tstats.iqr() \t\t\t{stats.iqr(values)}")
-    print(f"Spannweite \t\tmax(values) - min(values) \t{max(values) - min(values)}")
+    print(f"Max \t\t\tmax(values) \t\t\t\t\t{max(values)}")
+    print(f"Min \t\t\tmin(values) \t\t\t\t\t{min(values)}")
+    print(f"Modalwert \t\tstats.mode() \t\t\t\t\t{stats.mode(values)}")
+    print(f"Arithmetische Mittel \tnp.mean() \t\t\t\t\t{np.mean(values)}")
+    print(f"Median \t\t\tnp.median() \t\t\t\t\t{np.median(values)}")
+    x90 = np.quantile(values, 0.9, interpolation ="higher" )
+    x75 = np.quantile(values, 0.75, interpolation ="higher" )
+    x50 = np.quantile(values, 0.5, interpolation ="higher" )
+    x25 = np.quantile(values, 0.25, interpolation ="higher" )
+    x10 = np.quantile(values, 0.1, interpolation ="higher" )
+    print(f"90% Quantil \t\tnp.quantile(list, 0.9, interpolation =higher) \t{x90}")
+    print(f"75% Quartil \t\tnp.quantile(list, 0.75, interpolation =higher) \t{x75}")
+    print(f"50% Quartil \t\tnp.quantile(list, 0.5, interpolation =higher) \t{x50}")
+    print(f"25% Quartil \t\tnp.quantile(list, 0.25, interpolation =higher) \t{x25}")
+    print(f"10% Quantil \t\tnp.quantile(list, 0.1, interpolation =higher) \t{x10}")
+    print(f"Varianz \t\tnp.var(list) \t\t\t\t\t{np.var(values)}")
+    print(f"Standardabweichung \tnp.std(list, ddof = 1) \t\t\t\t{np.std(values, ddof = 1)}")
+    print(f"Interquartilsabstand \tstats.iqr() \t\t\t\t\t{stats.iqr(values)}")
+    print(f"Spannweite \t\tmax(values) - min(values) \t\t\t{max(values) - min(values)}")
 
 def combinatorics(n, k, type):
 
@@ -141,29 +146,50 @@ def diskret(n, k, p, lam, type, method):
         print(f"Varianz \tlambda \t\t\t{lam}")
 
         
-def stetig(c,a,b,lam, method, type):
+def stetig(c,a,b,erwart, std, lam, method, type):
     print("\nBeschreibung \t\tFormel \t\t\tErgebnis")
     print("--------------------------------------------------------------------")
 
     if type == "gv":
         print("Gleichverteilung")
         if method == "cdf":
-            print(f"P(X <= {c}) \t\tuniform.cdf{c,a,b} \t{uniform.cdf(c,a,b)}")
+            print(f"P(X <= {c}) \t\tuniform.cdf{c,a,b} \t{uniform.cdf(c,a,b)}") #a,b,c / c,b,a | b,c,a n|a,c,b | b,a,c
         elif method == "sf":
             print(f"P(X > {c}) \t\tuniform.sf{c,a,b} \t{uniform.sf(c,a,b)}")
         
-        #print(f"Erwartungswert \tlambda \t\t\t{lam} ")
+        print(f"Erwartungswert \t(a+b)/2 \t\t\t{(a+b)/2} ")
        
-        #print(f"Varianz \tlambda \t\t\t{lam}")
+        print(f"Varianz \t((b-a)**2)/12 \t\t\t{((b-a)**2)/12}")
 
     if type == "exp":
         print("Exponentialverteilung")
         if method == "cdf":
-            print(f"P(X < {c}) \t\texpon.cdf{c, lam} \t{expon.cdf(1/lam,c)}")
+            print(f"P(X < {c}) \t\texpon.cdf{c, lam} \t{expon.cdf(c,lam)}")
         elif method == "sf":
-            print(f"P(X > {c}) \t\texpon.sf{c, lam} \t{expon.sf(1/lam, c)}")
+            print(f"P(X > {c}) \t\texpon.sf{c, lam} \t{expon.sf(c, lam)}")
         
         print(f"Erwartungswert \t1/lambda \t\t\t{1/lam} ")
        
         print(f"Varianz \t1/lambda**2 \t\t\t{1/lam**2}")
+
+    if type == "norm":
+        print("Normalverteilung")
+        if method == "cdf":
+            print(f"P(X < {c}) \t\tnorm.cdf{erwart, c, std} \t{norm.cdf(c, erwart,std)}")
+        elif method == "sf":
+            print(f"P(X > {c}) \t\tnorm.sf{erwart, c, std} \t{norm.sf(c, erwart,std)}")
+        elif method == "ppf":
+            print(f"x{c}) \t\tnorm.ppf{erwart, c, std} \t{norm.ppf(c, erwart,std)}")
         
+        print(f"Erwartungswert \t1/lambda \t\t\t{1/lam} ")
+       
+        print(f"Varianz \t1/lambda**2 \t\t\t{1/lam**2}")
+
+
+
+
+
+
+def laplace(test, tupel):
+    
+    print(len(list(filter(test, tupel))) / len(tupel))

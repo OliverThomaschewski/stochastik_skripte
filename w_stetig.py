@@ -10,42 +10,46 @@ Wichtig: Die Wahrscheinlichkeit, dass X genau einen Wert annimmt, ist immer 0
 
 Gleichverteilung
 
-a = minimaler Wert
-b = maximaler Wert
-c = gesuchter Wert
+    type : "gv"
+    a = minimaler Wert
+    b = maximaler Wert
+    c = gesuchter Wert
 
-type : "gv"
+    
 
 Exponentialverteilung
-Beschreibt die Zeit zwischen zwei Ereignissen.
+    Beschreibt die Zeit zwischen zwei Ereignissen.
+    Wahrscheinlichkeit bis zur ersten Ankunft?
 
-lam = Ankunftsrate
+    type = "exp"
+    c = gesuchter Wert
+    lam = Ankunftsrate
 
-type = "exp"
-c = gesuchter Wert
-
-Lambda gegeben
+    Lambda gegeben
 
 Normalverteilung
-
-Standardnormalverteilung
-
-
+    N(erwart, std)
+    erwart = Erwartungswert
+    std = Standardabweichung
+    c = Gesuchter Wert
 
 
 METHOD
 P(X <= 3) = cdf
 P(X > 3) = sf
+x(quantil) = ppf Für Normalverteilung?
 """
 
 type = "exp"
-method = "sf"
+method = "cdf"
 
 a = 5
 b = 300
-c = 12
-lam = 18
+c = 1
+std = 7.17
+erwart = 180.3
+lam = 0.5
 
 
 
-stetig(c,a,b,lam, method,type)
+stetig(c,a,b, erwart, std,lam, method,type)

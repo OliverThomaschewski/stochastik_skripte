@@ -41,6 +41,8 @@ Binomialverteilung
     p: Erfolgswahrscheinlichkeit eines Versuchs
 
     type = "bin"
+
+    Bei "weniger als 3 versuchen" muss eine 2 eingegeben werden
     
 
 Poissonverteilung
@@ -53,21 +55,27 @@ Poissonverteilung
     k: Anzahl der Ankünfte
 
 
+
+
 Method:
 
     P(X = 3): pmf
-    P(X <= 3):cdf
+    P(X <= 3):cdf Achtung: kleiner GLEICH
     P(X > 3): sf
+
+    
 
 """
 
-type = "ber"
+type = "po"
 method = "pmf"
-n = 2
-k = 10
-p = 0.5
-lam = 3
+n = 5
+k = 7
+p = 0.7
+lam = 7
 
 
 diskret(n,k,p,lam,type,method)
+
+
 

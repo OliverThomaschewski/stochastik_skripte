@@ -5,7 +5,7 @@ Zeigt die grundlegenden Statistiken einer Liste aus Zahlen
 
 """
 
-values = (1,2,3,4,5,6,7,8,9,10)
+values = (25,17,25,29,20,15,11)
 
 show_basics(values)
 
