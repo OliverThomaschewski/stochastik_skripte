@@ -164,9 +164,9 @@ def stetig(c,a,b,erwart, std, lam, method, type):
     if type == "exp":
         print("Exponentialverteilung")
         if method == "cdf":
-            print(f"P(X < {c}) \t\texpon.cdf{c, lam} \t{expon.cdf(c,lam)}")
+            print(f"P(X < {c}) \t\texpon.cdf{c, lam} \t{expon.cdf(c,scale = 1/lam)}")
         elif method == "sf":
-            print(f"P(X > {c}) \t\texpon.sf{c, lam} \t{expon.sf(c, lam)}")
+            print(f"P(X > {c}) \t\texpon.sf{c, lam} \t{expon.sf(c,scale = 1/lam)}")
         
         print(f"Erwartungswert \t1/lambda \t\t\t{1/lam} ")
        

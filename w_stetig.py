@@ -41,14 +41,19 @@ x(quantil) = ppf Für Normalverteilung?
 """
 
 type = "exp"
-method = "cdf"
+method = "sf"
 
+#Beispiel Exponentialverteilung Skript ( Bei Erik in Whatsapp)
+#Bei Schuhen kommt rotz raus
 a = 5
 b = 300
-c = 1
+c = 15
+
+lam = 1/18
+
 std = 7.17
 erwart = 180.3
-lam = 0.5
+
 
 
 
